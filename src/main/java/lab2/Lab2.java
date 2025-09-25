@@ -31,7 +31,7 @@ InputStream getRandomAvatarStream() throws IOException, InterruptedException {
 
     String[] styles = { "adventurer", "adventurer-neutral", "avataaars", "big-ears", "big-ears-neutral", "big-smile", "bottts", "croodles", "croodles-neutral", "fun-emoji", "icons", "identicon", "initials", "lorelei", "micah", "miniavs", "open-peeps", "personas", "pixel-art", "pixel-art-neutral" };
     // styles is an array which is a String object used as a reference
-    //
+
 
     var style = styles[(int)(Math.random() * styles.length)]; // Math.random is a class method, returns double between 0 and 1. Style is string of reference type & styles.length is  instance variable
 
