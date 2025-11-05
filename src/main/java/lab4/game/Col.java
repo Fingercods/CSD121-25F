@@ -4,7 +4,7 @@ package lab4.game;
  * Represents the column position of a tictactoe board location
  */
 public enum Col {
-    Left, Middle, Right;
+    LEFT, MIDDLE, RIGHT;
 
     /**
      * @param str A string representation of a column position
@@ -13,9 +13,9 @@ public enum Col {
      */
     public static Col from(String str) {
         return switch (str.toLowerCase()) {
-            case "1", "l" -> Left;
-            case "2", "m", "c" -> Middle;
-            case "3", "r" -> Right;
+            case "1", "l" -> LEFT;
+            case "2", "m", "c" -> MIDDLE;
+            case "3", "r" -> RIGHT;
             default -> throw new IllegalArgumentException("Invalid column: " + str);
         };
     }
