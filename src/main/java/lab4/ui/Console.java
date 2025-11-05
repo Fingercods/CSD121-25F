@@ -1,16 +1,20 @@
 package lab4.ui;
 
 import lab4.game.*;
-
 import java.util.Scanner;
+
+// jcolor imports
+import com.diogonunes.jcolor.Attribute;
+import static com.diogonunes.jcolor.Ansi.colorize;
 
 /**
  * Helper methods for doing console-based user interaction
  */
 public class Console {
 
+    // grey (white) for normal info
     public static void println(String message) {
-        System.out.println(message);
+        System.out.println(colorize(message, Attribute.TEXT_COLOR(200, 200, 200)));
     }
 
     /**
@@ -19,7 +23,8 @@ public class Console {
      * @return The user's response
      */
     public static String prompt(String promptMessage) {
-        System.out.print(promptMessage);
+        // green for prompt
+        System.out.print(colorize(promptMessage, Attribute.GREEN_TEXT()));
         var scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -29,7 +34,8 @@ public class Console {
      * @param board A tictactoe game board
      */
     public static void showBoard(Board board) {
-        System.out.print(board);
+        // grey text for neutral board display
+        System.out.print(colorize(board.toString(), Attribute.TEXT_COLOR(180, 180, 180)));
     }
 
     /**
@@ -41,39 +47,39 @@ public class Console {
      */
     public static Position promptForPosition(String prompt, Board board) {
 
-
         var scanner = new Scanner(System.in);
-        final String helpMessage = "Input must be in the format 'row column', e.g., '1 2' or 't m' for the top middle cell.";
+        final String helpMessage =
+                "Input must be in the format 'row column', e.g., '1 2' or 't m' for the top middle cell.";
 
-        while ( true ) {
-            System.out.print(prompt);
+        while (true) {
+            // green prompt
+            System.out.print(colorize(prompt, Attribute.GREEN_TEXT()));
             var input = scanner.nextLine().trim();
 
-            if ( input.length() != 3 ) {
-                System.out.println(helpMessage);
+            if (input.length() != 3) {
+                System.out.println(colorize(helpMessage, Attribute.RED_TEXT(), Attribute.BOLD()));
                 continue;
             }
 
             var parts = input.split(" ");
-
-            if ( parts.length != 2 ) {
-                System.out.println(helpMessage);
+            if (parts.length != 2) {
+                System.out.println(colorize(helpMessage, Attribute.RED_TEXT(), Attribute.BOLD()));
                 continue;
             }
 
-            // The .from methods may throw if the user entered invalid location text, so we try/catch
             try {
-
                 var pos = new Position(Row.from(parts[0]), Col.from(parts[1]));
 
                 if (board.isOccupiedAt(pos)) {
-                    System.out.println("That position is already taken.");
+                    System.out.println(colorize("That position is already taken.",
+                            Attribute.RED_TEXT(), Attribute.BOLD()));
                     continue;
                 }
 
                 return pos;
-            } catch ( IllegalArgumentException e ) {
-                System.out.println(helpMessage);
+
+            } catch (IllegalArgumentException e) {
+                System.out.println(colorize(helpMessage, Attribute.RED_TEXT(), Attribute.BOLD()));
             }
         }
     }

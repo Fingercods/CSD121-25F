@@ -4,7 +4,7 @@ package lab4.game;
  * Represents the row position of a tictactoe board location
  */
 public enum Row {
-    Top, Middle, Bottom;
+    TOP, MIDDLE, BOTTOM;
 
     /**
      * @param str A string representation of a row position
@@ -13,9 +13,9 @@ public enum Row {
      */
     public static Row from(String str) {
         return switch (str.toLowerCase()) {
-            case "1", "t" -> Top;
-            case "2", "m", "c" -> Middle;
-            case "3", "b" -> Bottom;
+            case "1", "t" -> TOP;
+            case "2", "m", "c" -> MIDDLE;
+            case "3", "b" -> BOTTOM;
             default -> throw new IllegalArgumentException("Invalid row: " + str);
         };
     }
