@@ -25,5 +25,9 @@
             </plugin>
         </plugins>
     </build>
+    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+    <dependencies>
+
+    </dependencies>
 
 </project>
