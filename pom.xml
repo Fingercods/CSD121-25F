@@ -30,17 +30,10 @@
     </build>
 
     <dependencies>
-        <!-- JavaFX Controls -->
         <dependency>
-        <groupId>com.diogonunes</groupId>
-        <artifactId>JColor</artifactId>
-        <version>5.5.1</version>
-    </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>25</version>
+            <groupId>com.diogonunes</groupId>
+            <artifactId>JColor</artifactId>
+            <version>5.5.1</version>
         </dependency>
     </dependencies>
 
