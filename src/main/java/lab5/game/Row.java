@@ -16,7 +16,7 @@ public enum Row {
             case "1", "t" -> Top;
             case "2", "m", "c" -> Middle;
             case "3", "b" -> Bottom;
-            default -> throw new IllegalArgumentException("Invalid row: " + str);
+            default -> throw new IllegalArgumentException("Invalid row: " + str);//This helps catch mistakes and invalid input
         };
     }
 }

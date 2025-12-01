@@ -12,7 +12,7 @@ public record Position(Row row, Col col) {
      * @return The position corresponding to the given string representation
      * @throws IllegalArgumentException if the given string is not a valid representation for a position
      */
-    public static Position parse(String str) {
+    public static Position parse(String str) {//Converts a string to a Position
         var parts = str.split(" ");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid position: " + str);
