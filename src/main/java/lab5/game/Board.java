@@ -7,15 +7,28 @@ import static lab5.game.PlayerToken.O;
 import static lab5.game.PlayerToken.X;
 
 /**
- * Represents a TicTacToe game board
+ * Represents the 3x3 TicTacToe game board.
+ * <p>
+ * This class stores the state of the board and provides all the basic
+ * operations needed to run the game, such as:
+ * <ul>
+ *     <li>Placing X and O tokens on the board</li>
+ *     <li>Checking if a position is empty</li>
+ *     <li>Determining whose turn it is</li>
+ *     <li>Checking for a winner or a draw</li>
+ *     <li>Getting a list of empty cells</li>
+ *     <li>Creating copies of the board or building it from a string</li>
+ * </ul>
+ * <p>
+ * The Board class acts as the main data model for TicTacToe and is used by
+ * the game engine to track and update the board after each move.
  */
-public class Board {
 
+public class Board {
     /**
      * Represents the high-level status of the game board
      */
     public static enum Status { InProgress, Draw, XWins, OWins }
-
     /**
      * The current game board state
      */
@@ -37,7 +50,7 @@ public class Board {
      * @param other The board to copy
      */
     public Board(Board other) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {//start at index 0 in both arrays, copy 3 items (the whole row)
             System.arraycopy(other.board[i], 0, board[i], 0, 3);
         }
     }
@@ -50,14 +63,14 @@ public class Board {
      *          Any character other than 'X', 'O' is considered an empty spot on the board.
      *          E.g. "XOX-XO--O" or "XOX\n-XO\n--O"
      */
-    public Board(String b) {
+    public Board(String b) {//It builds a TicTacToe board from a 9-character string
         b = b.replace("\n", "").toUpperCase();
         if (b.length() != 9) {
             throw new IllegalArgumentException("Invalid board state string");
         }
         for (int i = 0; i < b.length(); i++) {
             if (b.charAt(i) == 'X') {
-                this.placeX(new Position(Row.values()[i / 3], Col.values()[i % 3]));
+                this.placeX(new Position(Row.values()[i / 3], Col.values()[i % 3])); // row is used by divide because division order is 000111222 and col is used by % becuase remainders are like 012012012
             } else if (b.charAt(i) == 'O') {
                 this.placeO(new Position(Row.values()[i / 3], Col.values()[i % 3]));
             }
@@ -109,7 +122,7 @@ public class Board {
      * @param token The token to count
      * @return The number of tokens of the given type on the board
      */
-    private int count(PlayerToken token) {
+    private int count(PlayerToken token) {// count number of X and O to check whose turn it is
         int count = 0;
         for (var row : board) {
             for (var cell : row) {
@@ -177,7 +190,7 @@ public class Board {
     /**
      * @return A list of all empty positions on the game board
      */
-    public List<Position> getEmptyCells() {
+    public List<Position> getEmptyCells() {//Returns a list of all available positions
         var emptyPositions = new ArrayList<Position>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -196,7 +209,7 @@ public class Board {
      */
     public boolean isEmptyAt(Position pos) {
         return board[rowIdx(pos)][colIdx(pos)] == null;
-    }
+    } //Checks if a given cell is empty.
 
 
     /**
@@ -209,7 +222,7 @@ public class Board {
      */
     public PlayerToken getNextTurnToken() {
         return countXs() > countOs() ? O : X;
-    }
+    } //X always goes first If X count > O count, then O plays next Otherwise, X plays next
 
     /**
      * Places an X token on the game board at the given position
@@ -218,7 +231,7 @@ public class Board {
      */
     public void placeX(Position pos) throws IllegalArgumentException {
         place(pos, X);
-    }
+    }//If the cell is already taken → throw error Otherwise place X or O
 
     /**
      * Places an O token on the game board at the given position
@@ -227,7 +240,7 @@ public class Board {
      */
     public void placeO(Position pos) throws IllegalArgumentException {
         place(pos, O);
-    }
+    }//If the cell is already taken → throw error Otherwise place X or O
 
     /**
      * Places the given token on the game board at the given position.
@@ -242,7 +255,7 @@ public class Board {
         }
 
         board[rowIdx(pos)][colIdx(pos)] = token;
-    }
+    }//If the cell is already taken → throw error Otherwise place X or O
 
     /**
      * Places the next token on the game board at the given position.
@@ -257,7 +270,7 @@ public class Board {
             case X -> placeX(pos);
             case O -> placeO(pos);
         }
-    }
+    }//Automatically chooses X or O based on
 
     /**
      * @return A 3x3 string representation of the game board
@@ -267,7 +280,7 @@ public class Board {
      *               O..
      */
     @Override
-    public String toString() {
+    public String toString() {//Builds a printable string version of the board
         var boardString = new StringBuilder();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

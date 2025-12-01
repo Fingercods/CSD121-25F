@@ -2,39 +2,59 @@ package lab5.players;
 
 import lab5.game.Board;
 import lab5.game.Position;
-import lab5.ui.Console;
 
 /**
- * Represents a player in the game.
- *
- * TODO: Make this an abstract class with various subclasses for different types of players
+ * Represents a player in the Tic Tac Toe game.
+ * <p>
+ * This class stores the player's name and defines the common interface
+ * that all player types must follow. It is an abstract superclass that
+ * is extended by concrete player types such as {@code HumanPlayer} and
+ * various computer-controlled players.
+ * <p>
+ * Responsibilities of this class include:
+ * <ul>
+ *     <li>Storing and returning the player's name</li>
+ *     <li>Providing a common type that can be used by the game engine
+ *         regardless of the specific player implementation</li>
+ *     <li>Declaring the {@code pickNextMove} method that all subclasses
+ *         must implement in order to decide their next move</li>
+ * </ul>
+ * The actual behaviour for choosing a move is implemented in subclasses.
+ * For example, {@code HumanPlayer} will prompt the user through the console,
+ * while computer players will use different strategies to select their moves.
  */
-public class Player {
+public abstract class Player {
 
     private String name;
 
+    /**
+     * Construct a new player with the given name.
+     *
+     * @param name the name of the player
+     */
     public Player(String name) {
         this.name = name;
     }
 
-    public String getName() { return name; }
+    /**
+     * Get the name of this player.
+     *
+     * @return the player's name
+     */
+    public String getName() {
+        return name;
+    }
 
     /**
-     * Prompts the player to pick their next move.
-     * @param currentBoard The current state of the game board
-     * @return The position on the board where the player wants to place their token
+     * Decide and return the next move this player wants to make
+     * on the current board.
+     * <p>
+     * Each concrete subclass (for example, {@code HumanPlayer} or a
+     * computer-controlled player) must provide its own implementation
+     * of this method.
      *
-     * TODO: Make this an abstract method in an abstract class,
-     *          and use this implementation in a HumanPlayer subclass
+     * @param currentBoard the current state of the game board
+     * @return the position where this player wants to place their token
      */
-    public Position pickNextMove(Board currentBoard) {
-        while (true) {
-            var move = Console.promptForPosition(getName() + " pick your next move: ");
-            if (currentBoard.isEmptyAt(move)) {
-                return move;
-            } else {
-                Console.printAlert("That position is already taken.");
-            }
-        }
-    }
+    public abstract Position pickNextMove(Board currentBoard);
 }

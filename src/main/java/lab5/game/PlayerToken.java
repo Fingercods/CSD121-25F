@@ -9,7 +9,7 @@ public enum PlayerToken {
     /**
      * @return The opponent of this token
      */
-    public PlayerToken opponent() {
+    public PlayerToken opponent() {//switching turns
         return switch (this) {
             case X -> O;
             case O -> X;

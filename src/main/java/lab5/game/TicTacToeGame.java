@@ -3,14 +3,30 @@ package lab5.game;
 import lab5.players.Player;
 
 /**
- * Represents the current state of a tictactoe game, including which player's turn it is,
- * and the current state of the game board
+ * Handles all game logic for a Tic Tac Toe match.
+ * <p>
+ * This class is responsible for managing the full lifecycle of a game,
+ * including:
+ * <ul>
+ *     <li>Tracking which player's turn it is</li>
+ *     <li>Maintaining the current state of the game board</li>
+ *     <li>Asking the appropriate player to select their next move</li>
+ *     <li>Validating and placing that move on the board</li>
+ *     <li>Returning a {@code TurnRecord} describing what happened each turn</li>
+ * </ul>
+ * <p>
+ * The {@code TicTacToeGame} class acts as the main controller for game flow.
+ * It does not handle input/output directly; instead, it communicates with
+ * {@code Player} objects, which themselves determine how moves are chosen
+ * (e.g., human input or computer strategy).
  */
+
 public class TicTacToeGame {
 
     /**
      * The players in the game
      */
+
     private final Player playerX;
     private final Player playerO;
 
@@ -36,23 +52,22 @@ public class TicTacToeGame {
      * @throws IllegalArgumentException if the given position is already taken on the game board
      */
     public TurnRecord doNextTurn() throws IllegalArgumentException {
-        var turnToken = board.getNextTurnToken();
-        var whoseTurn = switch(turnToken) {
+        var turnToken = board.getNextTurnToken();//Get whose turn it is
+        var whoseTurn = switch(turnToken) {//Pick the correct player object
             case X -> playerX;
             case O -> playerO;
         };
-        var pos = whoseTurn.pickNextMove(board);
+        var pos = whoseTurn.pickNextMove(board);//Ask that player for their move
 
         // If the player objects are implemented correctly, this should never happen
-        if ( ! board.isEmptyAt(pos) ) {
+        if ( ! board.isEmptyAt(pos) ) {//Validate the move
             throw new IllegalArgumentException("Position %s is already taken".formatted(pos));
         }
 
-        board.placeNextToken(pos);
+        board.placeNextToken(pos);//Place the token on the board
 
-        return new TurnRecord(whoseTurn, turnToken, pos, board);
+        return new TurnRecord(whoseTurn, turnToken, pos, board);//return whose did what move and new board from main
     }
-
     /**
      * Represents what happened on one turn that was just played
      * @param whoseTurn The player who just played
@@ -60,5 +75,5 @@ public class TicTacToeGame {
      * @param newBoardState The new state of the game board after the turn was played
      */
     public record TurnRecord(Player whoseTurn, PlayerToken token, Position positionPlayed, Board newBoardState) {}
-
+//data container
 }
